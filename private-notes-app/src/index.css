@@ -1,68 +1,85 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap');
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 40 20% 97%;
+    --foreground: 30 10% 12%;
+    --card: 40 25% 95%;
+    --card-foreground: 30 10% 12%;
+    --popover: 40 20% 97%;
+    --popover-foreground: 30 10% 12%;
+    --primary: 24 70% 50%;
+    --primary-foreground: 40 20% 97%;
+    --secondary: 40 15% 90%;
+    --secondary-foreground: 30 10% 25%;
+    --muted: 40 15% 92%;
+    --muted-foreground: 30 8% 50%;
+    --accent: 24 50% 92%;
+    --accent-foreground: 24 70% 35%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 35 15% 87%;
+    --input: 35 15% 87%;
+    --ring: 24 70% 50%;
+    --radius: 0.75rem;
+    --sidebar-background: 40 20% 95%;
+    --sidebar-foreground: 30 10% 25%;
+    --sidebar-primary: 24 70% 50%;
+    --sidebar-primary-foreground: 40 20% 97%;
+    --sidebar-accent: 40 15% 90%;
+    --sidebar-accent-foreground: 30 10% 25%;
+    --sidebar-border: 35 15% 87%;
+    --sidebar-ring: 24 70% 50%;
+    --font-display: 'Source Serif 4', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --shadow-card: 0 1px 3px 0 hsl(30 10% 12% / 0.04), 0 1px 2px -1px hsl(30 10% 12% / 0.04);
+    --shadow-elevated: 0 10px 25px -5px hsl(30 10% 12% / 0.08), 0 8px 10px -6px hsl(30 10% 12% / 0.04);
   }
-  a:hover {
-    color: #747bff;
+
+  .dark {
+    --background: 30 10% 8%;
+    --foreground: 40 15% 90%;
+    --card: 30 10% 12%;
+    --card-foreground: 40 15% 90%;
+    --popover: 30 10% 12%;
+    --popover-foreground: 40 15% 90%;
+    --primary: 24 70% 55%;
+    --primary-foreground: 30 10% 8%;
+    --secondary: 30 10% 18%;
+    --secondary-foreground: 40 15% 85%;
+    --muted: 30 10% 18%;
+    --muted-foreground: 40 10% 55%;
+    --accent: 24 30% 18%;
+    --accent-foreground: 24 70% 70%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 10% 20%;
+    --input: 30 10% 20%;
+    --ring: 24 70% 55%;
+    --sidebar-background: 30 10% 10%;
+    --sidebar-foreground: 40 15% 85%;
+    --sidebar-primary: 24 70% 55%;
+    --sidebar-primary-foreground: 30 10% 8%;
+    --sidebar-accent: 30 10% 15%;
+    --sidebar-accent-foreground: 40 15% 85%;
+    --sidebar-border: 30 10% 18%;
+    --sidebar-ring: 24 70% 55%;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 }
