@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.js",       // Run server normally
-    "dev": "nodemon index.js"       // Run server with auto-reload (optional)
+    "start": "node index.js",       
+    "dev": "nodemon index.js"       
   },
   "dependencies": {
     "express": "^4.18.2",
