@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Pencil, Trash2, Check, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+
 
 interface Note {
   id: string;
