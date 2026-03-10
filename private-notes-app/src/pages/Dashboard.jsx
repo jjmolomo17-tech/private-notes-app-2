@@ -9,14 +9,6 @@ import { toast } from 'sonner';
 import { LogOut, Plus, StickyNote } from 'lucide-react';
 import NoteCard from '@/components/NoteCard';
 
-type Note = {
-  id: string;
-  title: string;
-  content: string | null;
-  user_id: string;
-  updated_at: string;
-};
-
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const queryClient = useQueryClient();
@@ -24,7 +16,7 @@ const Dashboard = () => {
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
-  const { data: notes = [], isLoading } = useQuery<Note[]>({
+  const { data: notes = [], isLoading } = useQuery({
     queryKey: ['notes'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -32,7 +24,7 @@ const Dashboard = () => {
         .select('*')
         .order('updated_at', { ascending: false });
       if (error) throw error;
-      return data as Note[];
+      return data;
     },
   });
 
@@ -55,10 +47,10 @@ const Dashboard = () => {
       setShowForm(false);
       toast.success('Note created');
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e) => toast.error(e.message),
   });
 
-  const updateNote = async (id: string, title: string, content: string) => {
+  const updateNote = async (id, title, content) => {
     const { error } = await supabase.from('notes').update({ title, content }).eq('id', id);
     if (error) {
       toast.error(error.message);
@@ -68,7 +60,7 @@ const Dashboard = () => {
     }
   };
 
-  const deleteNote = async (id: string) => {
+  const deleteNote = async (id) => {
     const { error } = await supabase.from('notes').delete().eq('id', id);
     if (error) {
       toast.error(error.message);
@@ -78,7 +70,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleCreate = (e: React.FormEvent) => {
+  const handleCreate = (e) => {
     e.preventDefault();
     if (!newTitle.trim()) return;
     createNote.mutate();
