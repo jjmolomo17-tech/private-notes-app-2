@@ -9,6 +9,14 @@ import { toast } from 'sonner';
 import { LogOut, Plus, StickyNote } from 'lucide-react';
 import NoteCard from '@/components/NoteCard';
 
+type Note = {
+  id: string;
+  title: string;
+  content: string | null;
+  user_id: string;
+  updated_at: string;
+};
+
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const queryClient = useQueryClient();
@@ -16,7 +24,7 @@ const Dashboard = () => {
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
-  const { data: notes = [], isLoading } = useQuery({
+  const { data: notes = [], isLoading } = useQuery<Note[]>({
     queryKey: ['notes'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -24,17 +32,20 @@ const Dashboard = () => {
         .select('*')
         .order('updated_at', { ascending: false });
       if (error) throw error;
-      return data;
+      return data as Note[];
     },
   });
 
   const createNote = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from('notes').insert({
-        title: newTitle,
-        content: newContent || null,
-        user_id: user!.id,
-      });
+      if (!user) throw new Error('User not authenticated');
+      const { error } = await supabase.from('notes').insert([
+        {
+          title: newTitle,
+          content: newContent || null,
+          user_id: user.id,
+        },
+      ]);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -44,7 +55,7 @@ const Dashboard = () => {
       setShowForm(false);
       toast.success('Note created');
     },
-    onError: (e) => toast.error(e.message),
+    onError: (e: any) => toast.error(e.message),
   });
 
   const updateNote = async (id: string, title: string, content: string) => {
@@ -94,7 +105,10 @@ const Dashboard = () => {
 
       <main className="mx-auto max-w-3xl px-4 py-8">
         {showForm ? (
-          <form onSubmit={handleCreate} className="mb-8 rounded-xl border bg-card p-5 shadow-[var(--shadow-card)] space-y-3">
+          <form
+            onSubmit={handleCreate}
+            className="mb-8 rounded-xl border bg-card p-5 shadow-[var(--shadow-card)] space-y-3"
+          >
             <Input
               placeholder="Note title"
               value={newTitle}
